@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { archiveQuotes } from '../data/quotes'
-import { UniverseEngine } from '../lib/UniverseEngine'
+import type { UniverseEngine } from '../lib/UniverseEngine'
 
 export function CosmosHero() {
   const stageRef = useRef<HTMLDivElement | null>(null)
@@ -10,13 +10,22 @@ export function CosmosHero() {
 
   useEffect(() => {
     if (!stageRef.current) return
-    const engine = new UniverseEngine(stageRef.current, archiveQuotes.map((quote) => quote.id))
-    engineRef.current = engine
-    quoteRefs.current.forEach((node, id) => engine.registerQuote(id, node))
+
+    let disposed = false
+    let engine: UniverseEngine | null = null
+    const stage = stageRef.current
+
+    void import('../lib/UniverseEngine').then(({ UniverseEngine }) => {
+      if (disposed) return
+      engine = new UniverseEngine(stage, archiveQuotes.map((quote) => quote.id))
+      engineRef.current = engine
+      quoteRefs.current.forEach((node, id) => engine?.registerQuote(id, node))
+    })
 
     return () => {
-      engine.destroy()
-      engineRef.current = null
+      disposed = true
+      engine?.destroy()
+      if (engineRef.current === engine) engineRef.current = null
     }
   }, [])
 
