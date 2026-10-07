@@ -1,4 +1,5 @@
 import { CosmosHero } from './components/CosmosHero'
+import { FoundingArchive } from './components/FoundingArchive'
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
           </div>
         </div>
       </section>
+
+      <FoundingArchive />
 
       <section className="mission-section" id="mission">
         <div className="mission-orbit" aria-hidden="true">
