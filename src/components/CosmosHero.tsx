@@ -1,12 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import { archiveQuotes } from '../data/quotes'
 import type { UniverseEngine } from '../lib/UniverseEngine'
+import './cosmos-refinement.css'
+
+const ambientQuotes = archiveQuotes.filter((quote) =>
+  ['q01', 'q03', 'q04', 'q05', 'q07', 'q08', 'q10', 'q12', 'q13', 'q15'].includes(quote.id),
+)
+
+const featuredQuotes = archiveQuotes.filter((quote) =>
+  ['q02', 'q06', 'q11', 'q14', 'q18', 'q24'].includes(quote.id),
+)
 
 export function CosmosHero() {
   const stageRef = useRef<HTMLDivElement | null>(null)
   const engineRef = useRef<UniverseEngine | null>(null)
   const quoteRefs = useRef(new Map<string, HTMLButtonElement>())
   const [focusedId, setFocusedId] = useState<string | null>(null)
+  const [featuredIndex, setFeaturedIndex] = useState(0)
 
   useEffect(() => {
     if (!stageRef.current) return
@@ -17,7 +27,7 @@ export function CosmosHero() {
 
     void import('../lib/UniverseEngine').then(({ UniverseEngine }) => {
       if (disposed) return
-      engine = new UniverseEngine(stage, archiveQuotes.map((quote) => quote.id))
+      engine = new UniverseEngine(stage, ambientQuotes.map((quote) => quote.id))
       engineRef.current = engine
       quoteRefs.current.forEach((node, id) => engine?.registerQuote(id, node))
     })
@@ -28,6 +38,17 @@ export function CosmosHero() {
       if (engineRef.current === engine) engineRef.current = null
     }
   }, [])
+
+  useEffect(() => {
+    if (focusedId || featuredQuotes.length < 2) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const interval = window.setInterval(() => {
+      setFeaturedIndex((index) => (index + 1) % featuredQuotes.length)
+    }, 7600)
+
+    return () => window.clearInterval(interval)
+  }, [focusedId])
 
   const setQuoteRef = (id: string) => (node: HTMLButtonElement | null) => {
     if (node) quoteRefs.current.set(id, node)
@@ -41,6 +62,7 @@ export function CosmosHero() {
   }
 
   const focusedQuote = archiveQuotes.find((quote) => quote.id === focusedId)
+  const featuredQuote = featuredQuotes[featuredIndex % featuredQuotes.length]
 
   return (
     <section className="cosmos-hero" aria-label="Human Archive Space">
@@ -49,7 +71,7 @@ export function CosmosHero() {
         <div className="cosmos-grain" aria-hidden="true" />
 
         <div className="quote-layer" aria-label="Thoughts in the human archive">
-          {archiveQuotes.map((quote) => (
+          {ambientQuotes.map((quote) => (
             <button
               key={quote.id}
               ref={setQuoteRef(quote.id)}
@@ -91,6 +113,14 @@ export function CosmosHero() {
             A living archive of what humanity thought, feared, loved and hoped for — preserved across generations.
           </p>
         </div>
+
+        {featuredQuote && !focusedQuote && (
+          <div key={featuredQuote.id} className="featured-thought" aria-hidden="true">
+            <span className="featured-thought__label">A voice from the archive</span>
+            <span className="featured-thought__text">“{featuredQuote.text}”</span>
+            <span className="featured-thought__meta">{featuredQuote.place} · {featuredQuote.year}</span>
+          </div>
+        )}
 
         <div className={`focus-readout ${focusedQuote ? 'is-visible' : ''}`} aria-live="polite">
           {focusedQuote && (
