@@ -105,6 +105,7 @@ export function CosmosHero() {
           <a className="wordmark" href="#top" aria-label="HUAR home">HUAR</a>
           <div className="header-actions">
             <a href="#archive">Archive</a>
+            <a href="#first-100">First 100</a>
             <a href="#mission">Mission</a>
             <a className="header-cta" href="#leave-a-thought">Leave your thought</a>
           </div>
