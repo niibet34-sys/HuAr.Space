@@ -365,8 +365,8 @@ export class UniverseEngine {
       // The archive should feel deep without turning the hero into a wall of text.
       // Quotes that drift through the identity statement are optically suppressed.
       const heroBlocked = mobile
-        ? y > height * 0.16 && y < height * 0.69 && x < width * 0.96
-        : y > height * 0.14 && y < height * 0.76 && x < width * 0.68
+        ? y > height * 0.2 && y < height * 0.7 && x > width * 0.08 && x < width * 0.92
+        : y > height * 0.22 && y < height * 0.7 && x > width * 0.17 && x < width * 0.83
 
       const depthPresence = isFocused
         ? 1
