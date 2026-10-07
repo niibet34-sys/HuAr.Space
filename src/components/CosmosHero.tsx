@@ -112,9 +112,9 @@ export function CosmosHero() {
 
         <div className="hero-context" id="top">
           <p className="eyebrow">Human Archive Space</p>
-          <p className="hero-context__rule">One defining thought.<br />Once every ten years.</p>
+          <p className="hero-context__rule">One defining thought.<br />For each archive decade.</p>
           <p className="hero-context__copy">
-            A living record of how human priorities change across a lifetime — and across generations.
+            The first archive is sealed in 2030. Then 2040, 2050 and beyond — a shared timeline of human change.
           </p>
         </div>
 
