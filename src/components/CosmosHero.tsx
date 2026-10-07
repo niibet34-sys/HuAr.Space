@@ -11,12 +11,15 @@ const featuredQuotes = archiveQuotes.filter((quote) =>
   ['q02', 'q06', 'q11', 'q14', 'q18', 'q24'].includes(quote.id),
 )
 
+const QUOTE_CYCLE_MS = 9200
+
 export function CosmosHero() {
   const stageRef = useRef<HTMLDivElement | null>(null)
   const engineRef = useRef<UniverseEngine | null>(null)
   const quoteRefs = useRef(new Map<string, HTMLButtonElement>())
   const [focusedId, setFocusedId] = useState<string | null>(null)
   const [featuredIndex, setFeaturedIndex] = useState(0)
+  const [featuredPaused, setFeaturedPaused] = useState(false)
 
   useEffect(() => {
     if (!stageRef.current) return
@@ -40,15 +43,15 @@ export function CosmosHero() {
   }, [])
 
   useEffect(() => {
-    if (focusedId || featuredQuotes.length < 2) return
+    if (focusedId || featuredPaused || featuredQuotes.length < 2) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const interval = window.setInterval(() => {
       setFeaturedIndex((index) => (index + 1) % featuredQuotes.length)
-    }, 7600)
+    }, QUOTE_CYCLE_MS)
 
     return () => window.clearInterval(interval)
-  }, [focusedId])
+  }, [featuredPaused, focusedId])
 
   const setQuoteRef = (id: string) => (node: HTMLButtonElement | null) => {
     if (node) quoteRefs.current.set(id, node)
@@ -63,6 +66,7 @@ export function CosmosHero() {
 
   const focusedQuote = archiveQuotes.find((quote) => quote.id === focusedId)
   const featuredQuote = featuredQuotes[featuredIndex % featuredQuotes.length]
+  const drift = featuredIndex % 3
 
   return (
     <section className="cosmos-hero" aria-label="Human Archive Space">
@@ -70,7 +74,7 @@ export function CosmosHero() {
         <div className="cosmos-vignette" aria-hidden="true" />
         <div className="cosmos-grain" aria-hidden="true" />
 
-        <div className="quote-layer" aria-label="Thoughts in the human archive">
+        <div className="quote-layer" aria-label="Distant thoughts in the human archive">
           {ambientQuotes.map((quote) => (
             <button
               key={quote.id}
@@ -106,19 +110,34 @@ export function CosmosHero() {
           </div>
         </header>
 
-        <div className="hero-intro" id="top">
+        <div className="hero-context" id="top">
           <p className="eyebrow">Human Archive Space</p>
-          <h1>One thought.<br />One human life.</h1>
-          <p className="hero-intro__copy">
-            A living archive of what humanity thought, feared, loved and hoped for — preserved across generations.
+          <p className="hero-context__rule">One defining thought.<br />Once every ten years.</p>
+          <p className="hero-context__copy">
+            A living record of how human priorities change across a lifetime — and across generations.
           </p>
         </div>
 
         {featuredQuote && !focusedQuote && (
-          <div key={featuredQuote.id} className="featured-thought" aria-hidden="true">
-            <span className="featured-thought__label">A voice from the archive</span>
-            <span className="featured-thought__text">“{featuredQuote.text}”</span>
-            <span className="featured-thought__meta">{featuredQuote.place} · {featuredQuote.year}</span>
+          <div
+            className={`featured-thought-wrap featured-thought-wrap--${drift}`}
+            role="status"
+            aria-live="polite"
+          >
+            <button
+              key={featuredQuote.id}
+              type="button"
+              className={`featured-thought ${featuredPaused ? 'is-paused' : ''}`}
+              aria-label={`${featuredQuote.text}. ${featuredQuote.place}, ${featuredQuote.year}. ${featuredPaused ? 'Resume' : 'Hold'} this thought.`}
+              onClick={() => setFeaturedPaused((paused) => !paused)}
+            >
+              <span className="featured-thought__signal" aria-hidden="true">
+                <i />
+                Voice from the archive
+              </span>
+              <span className="featured-thought__text">“{featuredQuote.text}”</span>
+              <span className="featured-thought__meta">{featuredQuote.place} · {featuredQuote.year}</span>
+            </button>
           </div>
         )}
 
@@ -130,6 +149,10 @@ export function CosmosHero() {
               <button type="button" onClick={() => focusQuote(null)}>Return to the universe</button>
             </>
           )}
+        </div>
+
+        <div className="hero-ethos" aria-hidden="true">
+          <span>One thought. One human life.</span>
         </div>
 
         <a className="scroll-cue" href="#archive" aria-label="Explore the archive">
