@@ -360,12 +360,28 @@ export class UniverseEngine {
       const blur = isFocused ? 0 : THREE.MathUtils.clamp((cameraDistance - 55) / 35, 0, 1.8)
       const x = (projected.x * 0.5 + 0.5) * width
       const y = (-projected.y * 0.5 + 0.5) * height
+      const mobile = width <= 620
+
+      // The archive should feel deep without turning the hero into a wall of text.
+      // Quotes that drift through the identity statement are optically suppressed.
+      const heroBlocked = mobile
+        ? y > height * 0.16 && y < height * 0.69 && x < width * 0.96
+        : y > height * 0.14 && y < height * 0.76 && x < width * 0.68
+
+      const depthPresence = isFocused
+        ? 1
+        : mobile
+          ? cameraDistance < 42 ? 0.32 : cameraDistance < 72 ? 0.14 : 0.055
+          : cameraDistance < 42 ? 0.54 : cameraDistance < 72 ? 0.27 : 0.105
+
+      const blockedPresence = heroBlocked && !isFocused ? 0.025 : 1
+      const finalOpacity = opacity * depthPresence * blockedPresence * (isDimmed ? 0.08 : 1)
 
       node.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${scale})`
-      node.style.opacity = String(opacity * (isDimmed ? 0.14 : 1))
+      node.style.opacity = String(finalOpacity)
       node.style.filter = `blur(${blur}px)`
       node.style.zIndex = String(Math.round(1000 - cameraDistance))
-      node.style.pointerEvents = opacity > 0.28 && cameraDistance < 82 ? 'auto' : 'none'
+      node.style.pointerEvents = isFocused || (finalOpacity > 0.16 && cameraDistance < 68) ? 'auto' : 'none'
       node.dataset.depth = cameraDistance < 42 ? 'near' : cameraDistance < 72 ? 'mid' : 'far'
       node.dataset.focused = String(isFocused)
     })
