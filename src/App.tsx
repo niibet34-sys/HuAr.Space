@@ -13,10 +13,10 @@ function App() {
           </div>
           <div className="section-copy">
             <p>
-              HUAR asks each person for one defining thought once every ten years. Not a feed. Not a daily diary. A deliberate snapshot of what mattered most at that moment in a life.
+              HUAR collects one defining thought from each person for each archive decade. Not a feed. Not a daily diary. A deliberate snapshot of what mattered most at that moment in a life.
             </p>
             <p>
-              As the same people return across decades, the archive can reveal something rare: how priorities, fears, hopes and values change within a person — and across entire generations.
+              Each cycle is sealed on the same global timeline — 2030, 2040, 2050 and beyond — so the archive can reveal how priorities, fears, hopes and values change within a person and across entire generations.
             </p>
           </div>
         </div>
@@ -24,20 +24,20 @@ function App() {
         <div className="archive-axis" aria-label="Archive timeline concept">
           <div className="archive-axis__line" />
           <div className="archive-axis__era is-now">
-            <span>2026</span>
-            <strong>First thought</strong>
+            <span>2030</span>
+            <strong>Founding Archive sealed</strong>
           </div>
           <div className="archive-axis__era">
-            <span>2036</span>
-            <strong>Second thought</strong>
+            <span>2040</span>
+            <strong>Second Archive</strong>
           </div>
           <div className="archive-axis__era">
-            <span>2046</span>
-            <strong>A life in motion</strong>
+            <span>2050</span>
+            <strong>Third Archive</strong>
           </div>
           <div className="archive-axis__era">
-            <span>2056+</span>
-            <strong>Generational memory</strong>
+            <span>2060+</span>
+            <strong>Generational record</strong>
           </div>
         </div>
       </section>
@@ -55,7 +55,10 @@ function App() {
           <div className="section-kicker">The mission</div>
           <h2>Build a memory larger than any one generation.</h2>
           <p>
-            Digital archives disappear when companies disappear. HUAR is conceived as a durable cultural object: replicated, studied across decades and ultimately carried beyond Earth as a physical record of human thought.
+            Digital archives disappear when companies disappear. HUAR is conceived as a durable cultural object: each decade preserved digitally, sealed into a physical time capsule on Earth, and — if the mission becomes possible — ultimately carried beyond Earth as a record of human thought.
+          </p>
+          <p>
+            The first capsule will be sealed in 2030. The names of HUAR’s first 100 founders will be permanently engraved on that founding capsule as part of the project’s origin record.
           </p>
         </div>
       </section>
@@ -63,8 +66,8 @@ function App() {
       <section className="principles-section">
         <article>
           <span>01</span>
-          <h3>One defining thought.<br />Every ten years.</h3>
-          <p>Scarcity turns a post into a marker in a human life — something worth choosing carefully.</p>
+          <h3>One defining thought.<br />For each decade.</h3>
+          <p>Each archive cycle belongs to the same historical moment for everyone: 2030, 2040, 2050 and beyond.</p>
         </article>
         <article>
           <span>02</span>
@@ -96,7 +99,7 @@ function App() {
       <section className="leave-section" id="leave-a-thought">
         <p className="eyebrow">Your place in the archive</p>
         <h2>If humanity could remember one thought from you today, what would it be?</h2>
-        <p className="leave-section__note">Your next defining thought opens ten years later.</p>
+        <p className="leave-section__note">Your thought becomes part of the 2030 Founding Archive. The next archive is sealed in 2040.</p>
         <a className="return-to-space" href="#top">Return to the cosmos <span aria-hidden="true">↗</span></a>
       </section>
 
