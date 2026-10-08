@@ -28,7 +28,7 @@ function sampleQuotes(quotes: ArchiveQuote[], count: number, excludeId?: string)
     .map(({ quote }) => quote)
 }
 
-export function CosmosHero() {
+export function CosmosHero({ onLeaveThought }: { onLeaveThought: () => void }) {
   const stageRef = useRef<HTMLDivElement | null>(null)
   const engineRef = useRef<UniverseEngine | null>(null)
   const quoteRefs = useRef(new Map<string, HTMLButtonElement>())
@@ -168,7 +168,16 @@ export function CosmosHero() {
             <a href="#archive">Archive</a>
             <a href="#first-100">First 100</a>
             <a href="#mission">Mission</a>
-            <a className="header-cta" href="#leave-a-thought">Leave your thought</a>
+            <a
+              className="header-cta"
+              href="#leave-a-thought"
+              onClick={(event) => {
+                event.preventDefault()
+                onLeaveThought()
+              }}
+            >
+              Leave your thought
+            </a>
           </div>
         </header>
 
