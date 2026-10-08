@@ -4,9 +4,9 @@ import type { ArchiveQuote } from '../data/quotes'
 import type { UniverseEngine } from '../lib/UniverseEngine'
 import './cosmos-refinement.css'
 
-const QUOTE_CYCLE_MS = 9200
-const INTRO_QUOTE_DELAY_MS = 500
-const INTRO_SCROLL_LOCK_MS = 2800
+const QUOTE_CYCLE_MS = 7400
+const INTRO_QUOTE_DELAY_MS = 120
+const INTRO_SCROLL_LOCK_MS = 1900
 const AMBIENT_QUOTE_COUNT = 10
 
 function randomIndex(length: number, except = -1) {
@@ -40,6 +40,7 @@ export function CosmosHero() {
   const [focusedId, setFocusedId] = useState<string | null>(null)
   const [featuredPaused, setFeaturedPaused] = useState(false)
   const [introReady, setIntroReady] = useState(false)
+  const [outgoingIndex, setOutgoingIndex] = useState<number | null>(null)
 
   useEffect(() => {
     if (!stageRef.current) return
@@ -95,11 +96,20 @@ export function CosmosHero() {
     if (!introReady || focusedId || featuredPaused || historicalQuotes.length < 2) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
+    let exitTimer: number | null = null
     const interval = window.setInterval(() => {
-      setFeaturedIndex((index) => randomIndex(historicalQuotes.length, index))
+      setFeaturedIndex((index) => {
+        setOutgoingIndex(index)
+        if (exitTimer) window.clearTimeout(exitTimer)
+        exitTimer = window.setTimeout(() => setOutgoingIndex(null), 950)
+        return randomIndex(historicalQuotes.length, index)
+      })
     }, QUOTE_CYCLE_MS)
 
-    return () => window.clearInterval(interval)
+    return () => {
+      window.clearInterval(interval)
+      if (exitTimer) window.clearTimeout(exitTimer)
+    }
   }, [featuredPaused, focusedId, introReady])
 
   const setQuoteRef = (id: string) => (node: HTMLButtonElement | null) => {
@@ -115,7 +125,9 @@ export function CosmosHero() {
 
   const focusedQuote = historicalQuotes.find((quote) => quote.id === focusedId)
   const featuredQuote = historicalQuotes[featuredIndex % historicalQuotes.length]
+  const outgoingQuote = outgoingIndex === null ? null : historicalQuotes[outgoingIndex % historicalQuotes.length]
   const drift = featuredIndex % 3
+  const outgoingDrift = outgoingIndex === null ? 0 : outgoingIndex % 3
 
   return (
     <section className="cosmos-hero" aria-label="Human Archive Space">
@@ -168,16 +180,29 @@ export function CosmosHero() {
           </p>
         </div>
 
+        {introReady && outgoingQuote && !focusedQuote && (
+          <div
+            className={`featured-thought-wrap featured-thought-wrap--${outgoingDrift} featured-thought-wrap--outgoing`}
+            aria-hidden="true"
+          >
+            <div className="featured-thought featured-thought--outgoing">
+              <span className="featured-thought__signal"><i />Voice across time</span>
+              <span className="featured-thought__text">“{outgoingQuote.text}”</span>
+              <span className="featured-thought__meta">{outgoingQuote.meta}</span>
+            </div>
+          </div>
+        )}
+
         {introReady && featuredQuote && !focusedQuote && (
           <div
-            className={`featured-thought-wrap featured-thought-wrap--${drift}`}
+            className={`featured-thought-wrap featured-thought-wrap--${drift} featured-thought-wrap--incoming`}
             role="status"
             aria-live="polite"
           >
             <button
               key={featuredQuote.id}
               type="button"
-              className={`featured-thought ${featuredPaused ? 'is-paused' : ''}`}
+              className={`featured-thought featured-thought--incoming ${featuredPaused ? 'is-paused' : ''}`}
               aria-label={`${featuredQuote.text}. ${featuredQuote.meta}. ${featuredPaused ? 'Resume' : 'Hold'} this thought.`}
               onClick={() => setFeaturedPaused((paused) => !paused)}
             >
