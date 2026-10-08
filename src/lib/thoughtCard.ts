@@ -147,5 +147,19 @@ export async function renderThoughtCard(input: ThoughtCardInput) {
     canvas.toBlob((value) => value ? resolve(value) : reject(new Error('Could not render card.')), 'image/png', 1)
   })
 
-  return { blob, width, height }
+  let previewBlob: Blob | null = null
+  if (format === 'portrait') {
+    const preview = document.createElement('canvas')
+    preview.width = 540
+    preview.height = 675
+    const previewCtx = preview.getContext('2d')
+    if (previewCtx) {
+      previewCtx.drawImage(canvas, 0, 0, preview.width, preview.height)
+      previewBlob = await new Promise<Blob | null>((resolve) => {
+        preview.toBlob(resolve, 'image/jpeg', 0.82)
+      })
+    }
+  }
+
+  return { blob, previewBlob, width, height }
 }
