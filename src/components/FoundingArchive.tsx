@@ -3,6 +3,7 @@ import './founding-archive.css'
 
 const FOUNDING_ARCHIVE_DEADLINE = Date.UTC(2030, 0, 1, 0, 0, 0)
 const TOTAL_FOUNDING_PLACES = 100
+const RESERVED_FOUNDING_PLACES = 11
 
 type Countdown = {
   days: number
@@ -37,8 +38,12 @@ export function FoundingArchive() {
     return () => window.clearInterval(timer)
   }, [])
 
+  const remainingPlaces = TOTAL_FOUNDING_PLACES - RESERVED_FOUNDING_PLACES
   const places = useMemo(
-    () => Array.from({ length: TOTAL_FOUNDING_PLACES }, (_, index) => index + 1),
+    () => Array.from({ length: TOTAL_FOUNDING_PLACES }, (_, index) => ({
+      place: index + 1,
+      reserved: index < RESERVED_FOUNDING_PLACES,
+    })),
     [],
   )
 
@@ -128,28 +133,29 @@ export function FoundingArchive() {
         <div className="founder-register" aria-label="The First 100 founding places">
           <div className="founder-register__topline">
             <div>
-              <span>Founding Circle capacity</span>
-              <strong>{TOTAL_FOUNDING_PLACES}</strong>
+              <span>Founding places remaining</span>
+              <strong>{remainingPlaces}</strong>
             </div>
             <div className="founder-register__claimed">
-              <span>Register status</span>
-              <strong>Opening soon</strong>
+              <span>Reserved</span>
+              <strong>{RESERVED_FOUNDING_PLACES} / {TOTAL_FOUNDING_PLACES}</strong>
             </div>
           </div>
 
           <div className="founder-register__grid founder-register__grid--etched">
-            {places.map((place) => (
+            {places.map(({ place, reserved }) => (
               <span
                 key={place}
-                aria-label={`Founding place ${pad(place, 3)}`}
-                title={`Founding place ${pad(place, 3)}`}
+                className={reserved ? 'is-claimed' : ''}
+                aria-label={`Founding place ${pad(place, 3)} · ${reserved ? 'reserved' : 'available'}`}
+                title={`Founding place ${pad(place, 3)} · ${reserved ? 'reserved' : 'available'}`}
               />
             ))}
           </div>
 
           <div className="founder-register__legend">
-            <span><i className="is-available" aria-hidden="true" /> 100 unique inscriptions</span>
-            <span>Register closes forever after place 100</span>
+            <span><i className="is-claimed" aria-hidden="true" /> Reserved</span>
+            <span><i className="is-available" aria-hidden="true" /> Available · closes forever after place 100</span>
           </div>
 
           <div className="founder-register__engraving">
