@@ -12,13 +12,14 @@ function toBase64(bytes: Uint8Array) {
 export const onRequestPut = async (context: any) => {
   const token = String(context.params.id || '')
   const contentType = context.request.headers.get('content-type') || ''
+  const manageToken = context.request.headers.get('x-huar-manage-token') || ''
   if (!contentType.startsWith('image/jpeg')) {
     return new Response('JPEG required', { status: 415 })
   }
 
   const item = await context.env.HUAR_DB.prepare(
-    'SELECT share_token, status FROM thoughts WHERE share_token = ? LIMIT 1'
-  ).bind(token).first()
+    'SELECT share_token, status FROM thoughts WHERE share_token = ? AND manage_token = ? LIMIT 1'
+  ).bind(token, manageToken).first()
 
   if (!item || item.status === 'rejected') return new Response('Not found', { status: 404 })
 
