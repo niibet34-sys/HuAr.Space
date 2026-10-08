@@ -5,8 +5,8 @@ import type { UniverseEngine } from '../lib/UniverseEngine'
 import './cosmos-refinement.css'
 
 const QUOTE_CYCLE_MS = 9200
-const INTRO_QUOTE_DELAY_MS = 850
-const INTRO_SCROLL_LOCK_MS = 2400
+const INTRO_QUOTE_DELAY_MS = 500
+const INTRO_SCROLL_LOCK_MS = 2800
 const AMBIENT_QUOTE_COUNT = 10
 
 function randomIndex(length: number, except = -1) {
