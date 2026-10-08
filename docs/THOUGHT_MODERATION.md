@@ -43,3 +43,12 @@ WHERE id = 'THOUGHT_ID';
 
 Referral and sharing events are recorded in `analytics_events`.
 The main funnel can be queried by `event_name`, `referral_token`, and `thought_id`.
+
+
+## Author-only follow-up
+
+Each submission receives a private `manage_token` that is returned only to the submitting browser. Public share tokens are read-only. Optional email updates and raster-card uploads require the private management token.
+
+## Social preview storage
+
+The downloadable artifact is generated as a 1080×1350 PNG (or 1080×1920 Story PNG) in the browser. A smaller JPEG preview is stored in `thought_cards` for Open Graph/social link previews. This is an early-stage storage layer that can be moved to R2 without changing public permalink URLs.
