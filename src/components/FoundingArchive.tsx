@@ -3,7 +3,6 @@ import './founding-archive.css'
 
 const FOUNDING_ARCHIVE_DEADLINE = Date.UTC(2030, 0, 1, 0, 0, 0)
 const TOTAL_FOUNDING_PLACES = 100
-const CLAIMED_FOUNDING_PLACES = 0
 
 type Countdown = {
   days: number
@@ -32,7 +31,6 @@ function pad(value: number, length = 2) {
 
 export function FoundingArchive() {
   const [countdown, setCountdown] = useState(() => getCountdown())
-  const remainingPlaces = TOTAL_FOUNDING_PLACES - CLAIMED_FOUNDING_PLACES
 
   useEffect(() => {
     const timer = window.setInterval(() => setCountdown(getCountdown()), 1000)
@@ -40,7 +38,7 @@ export function FoundingArchive() {
   }, [])
 
   const places = useMemo(
-    () => Array.from({ length: TOTAL_FOUNDING_PLACES }, (_, index) => index < CLAIMED_FOUNDING_PLACES),
+    () => Array.from({ length: TOTAL_FOUNDING_PLACES }, (_, index) => index + 1),
     [],
   )
 
@@ -130,29 +128,28 @@ export function FoundingArchive() {
         <div className="founder-register" aria-label="The First 100 founding places">
           <div className="founder-register__topline">
             <div>
-              <span>Founding places remaining</span>
-              <strong>{remainingPlaces}</strong>
+              <span>Founding Circle capacity</span>
+              <strong>{TOTAL_FOUNDING_PLACES}</strong>
             </div>
             <div className="founder-register__claimed">
-              <span>Confirmed</span>
-              <strong>{CLAIMED_FOUNDING_PLACES} / {TOTAL_FOUNDING_PLACES}</strong>
+              <span>Register status</span>
+              <strong>Opening soon</strong>
             </div>
           </div>
 
-          <div className="founder-register__grid">
-            {places.map((claimed, index) => (
+          <div className="founder-register__grid founder-register__grid--etched">
+            {places.map((place) => (
               <span
-                key={index}
-                className={claimed ? 'is-claimed' : ''}
-                aria-label={`Founding place ${pad(index + 1, 3)} ${claimed ? 'claimed' : 'available'}`}
-                title={`Founding place ${pad(index + 1, 3)} · ${claimed ? 'claimed' : 'available'}`}
+                key={place}
+                aria-label={`Founding place ${pad(place, 3)}`}
+                title={`Founding place ${pad(place, 3)}`}
               />
             ))}
           </div>
 
           <div className="founder-register__legend">
-            <span><i className="is-available" aria-hidden="true" /> Available</span>
-            <span><i className="is-claimed" aria-hidden="true" /> Claimed</span>
+            <span><i className="is-available" aria-hidden="true" /> 100 unique inscriptions</span>
+            <span>Register closes forever after place 100</span>
           </div>
 
           <div className="founder-register__engraving">
