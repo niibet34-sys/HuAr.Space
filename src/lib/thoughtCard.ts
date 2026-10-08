@@ -124,8 +124,14 @@ export async function renderThoughtCard(input: ThoughtCardInput) {
 
   const metaY = format === 'story' ? height - 355 : height - 270
   ctx.fillStyle = 'rgba(223,230,245,.88)'
-  ctx.font = '600 23px Arial, sans-serif'
-  ctx.fillText(input.displayName.toUpperCase(), pad, metaY)
+  const displayName = input.displayName.toUpperCase()
+  let nameSize = 23
+  do {
+    ctx.font = '600 ' + nameSize + 'px Arial, sans-serif'
+    if (ctx.measureText(displayName).width <= maxQuoteWidth || nameSize <= 14) break
+    nameSize -= 1
+  } while (nameSize > 13)
+  ctx.fillText(displayName, pad, metaY)
 
   ctx.fillStyle = 'rgba(141,157,190,.66)'
   ctx.font = '600 16px Arial, sans-serif'
