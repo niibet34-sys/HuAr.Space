@@ -1060,3 +1060,48 @@ button {
     gap: 9px;
   }
 }
+
+
+.leave-section__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.leave-thought-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid rgba(232, 238, 255, 0.24);
+  color: rgba(249, 250, 255, 0.94);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.leave-thought-button:hover,
+.leave-thought-button:focus-visible {
+  border-color: rgba(232, 238, 255, 0.5);
+  background: rgba(255, 255, 255, 0.075);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 620px) {
+  .leave-section__actions {
+    display: grid;
+    justify-items: center;
+  }
+
+  .leave-thought-button {
+    min-height: 52px;
+  }
+}
