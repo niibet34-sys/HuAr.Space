@@ -53,3 +53,12 @@ The public website does not display a founding contribution amount. Founding det
 ## Direct email fallback
 
 `founders@huar.space` continues to route to Roman's personal Gmail for people who prefer to contact the founder directly.
+
+
+## Email notification
+
+Every new web-form request is also sent through the private Cloudflare service `huar-founder-notify` to the verified destination `romanderothschild@gmail.com`.
+
+The notification is sent from `founders@huar.space` and contains the applicant's name, email, country, optional note and request ID. Roman should reply personally from his Gmail to the applicant's email.
+
+The notifier is connected to Pages through a private service binding and protected by an internal secret; the notification endpoint is not exposed in the client.
