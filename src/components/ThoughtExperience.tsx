@@ -192,9 +192,8 @@ export function ThoughtExperience({ open, onClose }: Props) {
     }
   }
 
-  const shareText = submission
-    ? 'I left one thought for humanity. What would yours be?\nHUAR.SPACE\n' + submission.permalink
-    : ''
+  const shareText = 'I left one thought for humanity. What would yours be?\nHUAR.SPACE'
+  const shareTextWithLink = submission ? shareText + '\n' + submission.permalink : shareText
 
   const shareNative = async () => {
     if (!submission) return
@@ -212,8 +211,7 @@ export function ThoughtExperience({ open, onClose }: Props) {
       if (file && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           title: 'My thought for humanity · HUAR',
-          text: shareText,
-          url: submission.permalink,
+          text: shareTextWithLink,
           files: [file],
         })
       } else if (navigator.share) {
@@ -260,7 +258,7 @@ export function ThoughtExperience({ open, onClose }: Props) {
     const targets = {
       x: 'https://twitter.com/intent/tweet?text=' + text + '&url=' + url,
       facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + url,
-      whatsapp: 'https://wa.me/?text=' + text + '%20' + url,
+      whatsapp: 'https://wa.me/?text=' + encodeURIComponent(shareTextWithLink),
       linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + url,
     }
     window.open(targets[network], '_blank', 'noopener,noreferrer')
