@@ -41,7 +41,7 @@ export const onRequestGet = async (context: any) => {
 '<meta property="og:description" content="' + escapeHtml(description) + '" />' +
 '<meta property="og:url" content="' + canonical + '" />' +
 '<meta property="og:image" content="' + image + '" />' +
-'<meta property="og:image:type" content="image/svg+xml" />' +
+
 '<meta property="og:image:width" content="1080" /><meta property="og:image:height" content="1350" />' +
 '<meta name="twitter:card" content="summary_large_image" />' +
 '<meta name="twitter:title" content="' + title + '" />' +
