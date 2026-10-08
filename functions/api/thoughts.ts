@@ -76,14 +76,15 @@ export const onRequestPost = async (context: any) => {
 
   const id = crypto.randomUUID()
   const shareToken = token(10)
+  const manageToken = token(24)
   const referral = plainText(body.source_referral, 64) || null
   const channel = plainText(body.source_channel, 64) || null
 
   await context.env.HUAR_DB.prepare(
     `INSERT INTO thoughts
-      (id, thought, display_name, created_at, status, source_referral, source_channel, consent_public, share_token, epoch)
-     VALUES (?, ?, ?, ?, 'pending', ?, ?, 1, ?, 2030)`
-  ).bind(id, thought, displayName, now, referral, channel, shareToken).run()
+      (id, thought, display_name, created_at, status, source_referral, source_channel, consent_public, share_token, manage_token, epoch)
+     VALUES (?, ?, ?, ?, 'pending', ?, ?, 1, ?, ?, 2030)`
+  ).bind(id, thought, displayName, now, referral, channel, shareToken, manageToken).run()
 
   await context.env.HUAR_DB.prepare(
     `INSERT INTO analytics_events(event_name, created_at, thought_id, referral_token, session_id, metadata_json)
@@ -100,6 +101,7 @@ export const onRequestPost = async (context: any) => {
     ok: true,
     id,
     share_token: shareToken,
+    manage_token: manageToken,
     thought,
     display_name: displayName,
     created_at: now,
