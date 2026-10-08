@@ -154,7 +154,6 @@ export function ThoughtExperience({ open, onClose }: Props) {
       if (!response.ok) throw new Error(result.error || 'Could not save your thought.')
 
       setSubmission(result)
-      trackEvent('thought_submitted', { thought_id: result.id, referral_token: referral })
       if (referral) {
         trackEvent('referral_thought_submitted', {
           thought_id: result.id,
