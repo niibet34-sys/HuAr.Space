@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS founder_requests (
   country TEXT,
   note TEXT,
   status TEXT NOT NULL DEFAULT 'new' CHECK(status IN ('new','contacted','accepted','declined')),
+  notification_status TEXT NOT NULL DEFAULT 'pending' CHECK(notification_status IN ('pending','sent','failed')),
   created_at TEXT NOT NULL,
   source_referral TEXT,
   session_id TEXT
