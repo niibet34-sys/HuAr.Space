@@ -65,8 +65,12 @@ escapeHtml(item.epoch) + ` epoch</div><p class="quote">“` + thought + `”</p>
 <script>
 try {
   var s = localStorage.huar_session || (localStorage.huar_session = crypto.randomUUID());
-  fetch('/api/events',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({event:'referral_visitor_arrived',referral_token:'` +
-escapeHtml(token) + `',session_id:s})});
+  var ref = '` + escapeHtml(token) + `';
+  var seenKey = 'huar_ref_seen_' + ref;
+  if (!sessionStorage.getItem(seenKey)) {
+    sessionStorage.setItem(seenKey, '1');
+    fetch('/api/events',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({event:'referral_visitor_arrived',referral_token:ref,session_id:s})});
+  }
 } catch(e) {}
 </script></body></html>`
 
