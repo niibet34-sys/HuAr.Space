@@ -10,6 +10,7 @@ const ALLOWED = new Set([
   'referral_thought_submitted',
   'referral_first100_clicked',
   'thought_email_added',
+  'founding_request_opened',
 ])
 
 function clean(value: unknown, max: number) {
