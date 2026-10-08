@@ -119,11 +119,28 @@ html.huar-intro-lock .cosmos-hero .hero-ethos {
   pointer-events: auto;
   transform-style: preserve-3d;
   will-change: opacity, transform, filter;
-  animation: thought-flight 9.05s cubic-bezier(.2,.67,.18,1) both;
+  animation: none;
 }
 
 .featured-thought.is-paused {
   animation-play-state: paused;
+}
+
+.featured-thought--incoming {
+  animation: thought-arrive 1.08s cubic-bezier(.16,.72,.18,1) both;
+}
+
+.featured-thought--outgoing {
+  pointer-events: none;
+  animation: thought-exit 0.9s cubic-bezier(.4,0,.8,.2) both;
+}
+
+.featured-thought-wrap--incoming {
+  z-index: 19;
+}
+
+.featured-thought-wrap--outgoing {
+  z-index: 18;
 }
 
 .featured-thought::before {
@@ -214,38 +231,43 @@ html.huar-intro-lock .cosmos-hero .hero-ethos {
   pointer-events: none;
 }
 
-@keyframes thought-flight {
+@keyframes thought-arrive {
   0% {
     opacity: 0;
-    transform: translate3d(0, 42px, -620px) scale(0.22);
-    filter: blur(28px);
-    letter-spacing: 0.02em;
+    transform: translate3d(0, 34px, -680px) scale(0.16);
+    filter: blur(24px);
   }
-  4% {
-    opacity: 0.08;
+  35% {
+    opacity: 0.46;
+    transform: translate3d(0, 14px, -190px) scale(0.68);
+    filter: blur(8px);
   }
-  9% {
-    opacity: 0.48;
-    transform: translate3d(0, 17px, -190px) scale(0.67);
-    filter: blur(10px);
+  72% {
+    opacity: 0.96;
+    transform: translate3d(0, 2px, -18px) scale(0.97);
+    filter: blur(1px);
   }
-  15% {
+  100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
     filter: blur(0);
-    letter-spacing: 0;
   }
-  72% {
+}
+
+@keyframes thought-exit {
+  0% {
     opacity: 1;
-    transform: translate3d(0, -3px, 6px) scale(1.012);
+    transform: translate3d(0, 0, 0) scale(1);
     filter: blur(0);
   }
-  79% {
-    opacity: 0.78;
+  45% {
+    opacity: 0.5;
+    transform: translate3d(0, -8px, -180px) scale(0.72);
+    filter: blur(7px);
   }
   100% {
     opacity: 0;
-    transform: translate3d(0, -26px, -520px) scale(0.28);
+    transform: translate3d(0, -24px, -620px) scale(0.18);
     filter: blur(24px);
   }
 }
