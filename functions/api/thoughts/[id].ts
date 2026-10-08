@@ -39,11 +39,16 @@ export const onRequestPatch = async (context: any) => {
   try { body = await context.request.json() } catch { return json({ error: 'Invalid request.' }, 400) }
 
   const email = clean(body.email, 200)
+  const manageToken = clean(body.manage_token, 80)
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return json({ error: 'Please enter a valid email.' }, 400)
   }
 
-  const item = await findThought(context.env.HUAR_DB, context.params.id)
+  const item = await context.env.HUAR_DB.prepare(
+    `SELECT id, status FROM thoughts
+     WHERE (share_token = ? OR id = ?) AND manage_token = ? LIMIT 1`
+  ).bind(context.params.id, context.params.id, manageToken).first()
+
   if (!item || item.status === 'rejected') return json({ error: 'Thought not found.' }, 404)
 
   await context.env.HUAR_DB.prepare('UPDATE thoughts SET optional_email = ? WHERE id = ?')
