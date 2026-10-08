@@ -67,6 +67,11 @@ export const onRequestPost = async (context: any) => {
   }
 
   const now = new Date().toISOString()
+  const staleRateCutoff = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+  await context.env.HUAR_DB.prepare('DELETE FROM rate_limits WHERE updated_at < ?')
+    .bind(staleRateCutoff)
+    .run()
+
   await context.env.HUAR_DB
     .prepare(`INSERT INTO rate_limits(bucket_hash, count, updated_at)
       VALUES(?, 1, ?)
