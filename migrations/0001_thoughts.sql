@@ -40,3 +40,18 @@ CREATE TABLE IF NOT EXISTS thought_cards (
   created_at TEXT NOT NULL,
   FOREIGN KEY (share_token) REFERENCES thoughts(share_token)
 );
+
+
+CREATE TABLE IF NOT EXISTS founder_requests (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  country TEXT,
+  note TEXT,
+  status TEXT NOT NULL DEFAULT 'new' CHECK(status IN ('new','contacted','accepted','declined')),
+  created_at TEXT NOT NULL,
+  source_referral TEXT,
+  session_id TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_founder_requests_status_created ON founder_requests(status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_founder_requests_email ON founder_requests(email);
