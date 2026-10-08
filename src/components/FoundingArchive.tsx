@@ -263,7 +263,7 @@ export function FoundingArchive() {
                   <p className="section-kicker">Request one of the First 100 places</p>
                   <h3>Become part of where HUAR begins.</h3>
                   <p>
-                    Founding requests are reviewed personally. If there is a fit, Roman will reply directly with the founding details and next steps.
+                    Founding requests are reviewed personally. If there is a fit, Roman Rothschild will reply directly with the founding details and next steps.
                   </p>
                   <div className="founder-request__scarcity">
                     <strong>{remainingPlaces}</strong>
@@ -340,7 +340,7 @@ export function FoundingArchive() {
                 <p className="section-kicker">Request received</p>
                 <h3>Your place has not been claimed yet — but the conversation has begun.</h3>
                 <p>
-                  Roman will review your request personally and reply to <strong>{email}</strong> with the founding details and next steps.
+                  Roman Rothschild will review your request personally and reply to <strong>{email}</strong> with the founding details and next steps.
                 </p>
                 <button type="button" onClick={closeRequest}>Return to HUAR</button>
               </div>
