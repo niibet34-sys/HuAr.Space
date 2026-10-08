@@ -10,6 +10,7 @@ export type HuarEvent =
   | 'referral_thought_submitted'
   | 'referral_first100_clicked'
   | 'thought_email_added'
+  | 'founding_request_opened'
 
 export function getSessionId() {
   const key = 'huar_session'
