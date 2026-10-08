@@ -1,34 +1,48 @@
 export type ArchiveQuote = {
   id: string
   text: string
-  place: string
-  year: number
   author: string
+  meta: string
+  source: string
+  kind: 'historical'
 }
 
-export const archiveQuotes: ArchiveQuote[] = [
-  { id: 'q01', text: 'I hope the future remembers that ordinary lives mattered too.', place: 'Paris, France', year: 2026, author: 'Anonymous' },
-  { id: 'q02', text: 'I wish I had asked my father more questions while I still could.', place: 'Osaka, Japan', year: 2027, author: 'Anonymous' },
-  { id: 'q03', text: 'The happiest years were the ones I did not recognize as happy.', place: 'Lisbon, Portugal', year: 2028, author: 'Anonymous' },
-  { id: 'q04', text: 'Please build a world where curiosity is never treated as a weakness.', place: 'Nairobi, Kenya', year: 2029, author: 'Anonymous' },
-  { id: 'q05', text: 'I spent years chasing certainty. Love was the only thing that stayed true.', place: 'Buenos Aires, Argentina', year: 2030, author: 'Anonymous' },
-  { id: 'q06', text: 'If someone reads this far in the future: we were scared, but we were trying.', place: 'Reykjavík, Iceland', year: 2031, author: 'Anonymous' },
-  { id: 'q07', text: 'I want my daughter to inherit more courage than fear.', place: 'Seoul, South Korea', year: 2032, author: 'Anonymous' },
-  { id: 'q08', text: 'The planet felt enormous when I was a child and very small when I learned to fly.', place: 'Toronto, Canada', year: 2033, author: 'Anonymous' },
-  { id: 'q09', text: 'A good life was never a list of achievements. It was the people who stayed.', place: 'Florence, Italy', year: 2034, author: 'Anonymous' },
-  { id: 'q10', text: 'We kept inventing faster machines and still had to learn how to be patient.', place: 'Berlin, Germany', year: 2035, author: 'Anonymous' },
-  { id: 'q11', text: 'I hope silence still exists somewhere when you read this.', place: 'Kyoto, Japan', year: 2036, author: 'Anonymous' },
-  { id: 'q12', text: 'My greatest luxury was finally having enough time to notice my own life.', place: 'Cape Town, South Africa', year: 2037, author: 'Anonymous' },
-  { id: 'q13', text: 'We disagreed about almost everything and still watched the same sunsets.', place: 'Istanbul, Türkiye', year: 2038, author: 'Anonymous' },
-  { id: 'q14', text: 'Do not confuse being connected with being known.', place: 'Singapore', year: 2039, author: 'Anonymous' },
-  { id: 'q15', text: 'I used to think history was something behind us. Then I lived through it.', place: 'Warsaw, Poland', year: 2040, author: 'Anonymous' },
-  { id: 'q16', text: 'The future arrived slowly, then all at once, and still breakfast tasted the same.', place: 'Melbourne, Australia', year: 2041, author: 'Anonymous' },
-  { id: 'q17', text: 'I hope there are still places where children can see the Milky Way.', place: 'Marrakesh, Morocco', year: 2042, author: 'Anonymous' },
-  { id: 'q18', text: 'I learned too late that attention is a form of love.', place: 'Stockholm, Sweden', year: 2043, author: 'Anonymous' },
-  { id: 'q19', text: 'We wanted to leave a mark. Maybe listening would have been enough.', place: 'Mexico City, Mexico', year: 2044, author: 'Anonymous' },
-  { id: 'q20', text: 'Every generation believes it is standing at the edge of the world.', place: 'Athens, Greece', year: 2045, author: 'Anonymous' },
-  { id: 'q21', text: 'I remember when the ocean was colder.', place: 'Denpasar, Indonesia', year: 2046, author: 'Anonymous' },
-  { id: 'q22', text: 'My mother saved letters. I saved voice notes. You may save something else.', place: 'Dublin, Ireland', year: 2047, author: 'Anonymous' },
-  { id: 'q23', text: 'I hope your century has fewer reasons to teach children the word refugee.', place: 'Beirut, Lebanon', year: 2048, author: 'Anonymous' },
-  { id: 'q24', text: 'The older I became, the more miraculous an uneventful day felt.', place: 'Prague, Czechia', year: 2049, author: 'Anonymous' },
+export const historicalQuotes: ArchiveQuote[] = [
+  { id: 'h001', text: 'The unexamined life is not worth living.', author: 'Socrates', meta: 'Socrates · Plato, Apology', source: 'Plato, Apology', kind: 'historical' },
+  { id: 'h002', text: 'Man is by nature a political animal.', author: 'Aristotle', meta: 'Aristotle · Politics', source: 'Politics', kind: 'historical' },
+  { id: 'h003', text: 'Life is short, and art long.', author: 'Hippocrates', meta: 'Hippocrates · Aphorisms', source: 'Aphorisms', kind: 'historical' },
+  { id: 'h004', text: 'The life of the dead is placed in the memory of the living.', author: 'Cicero', meta: 'Cicero · Philippics', source: 'Philippics', kind: 'historical' },
+  { id: 'h005', text: 'It is not that we have a short time to live, but that we waste much of it.', author: 'Seneca', meta: 'Seneca · On the Shortness of Life', source: 'On the Shortness of Life', kind: 'historical' },
+  { id: 'h006', text: 'The universe is change; our life is what our thoughts make it.', author: 'Marcus Aurelius', meta: 'Marcus Aurelius · Meditations', source: 'Meditations', kind: 'historical' },
+  { id: 'h007', text: 'To see what is right and not to do it is want of courage.', author: 'Confucius', meta: 'Confucius · Analects', source: 'Analects', kind: 'historical' },
+  { id: 'h008', text: 'Knowledge itself is power.', author: 'Francis Bacon', meta: 'Francis Bacon · Meditationes Sacrae', source: 'Meditationes Sacrae', kind: 'historical' },
+  { id: 'h009', text: 'To thine own self be true.', author: 'William Shakespeare', meta: 'Shakespeare · Hamlet', source: 'Hamlet', kind: 'historical' },
+  { id: 'h010', text: 'We are such stuff as dreams are made on.', author: 'William Shakespeare', meta: 'Shakespeare · The Tempest', source: 'The Tempest', kind: 'historical' },
+  { id: 'h011', text: 'No man is an island, entire of itself.', author: 'John Donne', meta: 'John Donne · Devotions', source: 'Devotions upon Emergent Occasions', kind: 'historical' },
+  { id: 'h012', text: 'I think, therefore I am.', author: 'René Descartes', meta: 'Descartes · Discourse on the Method', source: 'Discourse on the Method', kind: 'historical' },
+  { id: 'h013', text: 'The heart has its reasons, which reason does not know.', author: 'Blaise Pascal', meta: 'Pascal · Pensées', source: 'Pensées', kind: 'historical' },
+  { id: 'h014', text: 'If I have seen further it is by standing on the shoulders of Giants.', author: 'Isaac Newton', meta: 'Isaac Newton · Letter to Robert Hooke', source: 'Letter to Robert Hooke', kind: 'historical' },
+  { id: 'h015', text: 'To err is human; to forgive, divine.', author: 'Alexander Pope', meta: 'Alexander Pope · An Essay on Criticism', source: 'An Essay on Criticism', kind: 'historical' },
+  { id: 'h016', text: 'Man is born free, and everywhere he is in chains.', author: 'Jean-Jacques Rousseau', meta: 'Rousseau · The Social Contract', source: 'The Social Contract', kind: 'historical' },
+  { id: 'h017', text: 'Have courage to use your own understanding!', author: 'Immanuel Kant', meta: 'Immanuel Kant · What Is Enlightenment?', source: 'What Is Enlightenment?', kind: 'historical' },
+  { id: 'h018', text: 'I do not wish them to have power over men; but over themselves.', author: 'Mary Wollstonecraft', meta: 'Mary Wollstonecraft · A Vindication', source: 'A Vindication of the Rights of Woman', kind: 'historical' },
+  { id: 'h019', text: 'There is no charm equal to tenderness of heart.', author: 'Jane Austen', meta: 'Jane Austen · Emma', source: 'Emma', kind: 'historical' },
+  { id: 'h020', text: 'Nothing great was ever achieved without enthusiasm.', author: 'Ralph Waldo Emerson', meta: 'Ralph Waldo Emerson · Essays', source: 'Essays', kind: 'historical' },
+  { id: 'h021', text: 'The mass of men lead lives of quiet desperation.', author: 'Henry David Thoreau', meta: 'Henry David Thoreau · Walden', source: 'Walden', kind: 'historical' },
+  { id: 'h022', text: 'Rather than love, than money, than fame, give me truth.', author: 'Henry David Thoreau', meta: 'Henry David Thoreau · Walden', source: 'Walden', kind: 'historical' },
+  { id: 'h023', text: 'I am large, I contain multitudes.', author: 'Walt Whitman', meta: 'Walt Whitman · Song of Myself', source: 'Song of Myself', kind: 'historical' },
+  { id: 'h024', text: 'Lost time is never found again.', author: 'Benjamin Franklin', meta: 'Benjamin Franklin · Poor Richard’s Almanack', source: 'Poor Richard’s Almanack', kind: 'historical' },
+  { id: 'h025', text: 'Power concedes nothing without a demand. It never did and it never will.', author: 'Frederick Douglass', meta: 'Frederick Douglass · 1857', source: 'West India Emancipation speech', kind: 'historical' },
+  { id: 'h026', text: 'Government of the people, by the people, for the people, shall not perish from the earth.', author: 'Abraham Lincoln', meta: 'Abraham Lincoln · Gettysburg Address', source: 'Gettysburg Address', kind: 'historical' },
+  { id: 'h027', text: 'All happy families are alike; each unhappy family is unhappy in its own way.', author: 'Leo Tolstoy', meta: 'Leo Tolstoy · Anna Karenina', source: 'Anna Karenina', kind: 'historical' },
+  { id: 'h028', text: 'We are all in the gutter, but some of us are looking at the stars.', author: 'Oscar Wilde', meta: 'Oscar Wilde · Lady Windermere’s Fan', source: 'Lady Windermere’s Fan', kind: 'historical' },
+  { id: 'h029', text: 'Without music, life would be a mistake.', author: 'Friedrich Nietzsche', meta: 'Friedrich Nietzsche · Twilight of the Idols', source: 'Twilight of the Idols', kind: 'historical' },
+  { id: 'h030', text: 'Life can only be understood backwards; but it must be lived forwards.', author: 'Søren Kierkegaard', meta: 'Søren Kierkegaard · Journals', source: 'Journals', kind: 'historical' },
+  { id: 'h031', text: 'Forever is composed of nows.', author: 'Emily Dickinson', meta: 'Emily Dickinson · Letter, 1862', source: 'Letter, 1862', kind: 'historical' },
+  { id: 'h032', text: 'A woman must have money and a room of her own if she is to write fiction.', author: 'Virginia Woolf', meta: 'Virginia Woolf · A Room of One’s Own', source: 'A Room of One’s Own', kind: 'historical' },
+  { id: 'h033', text: 'From so simple a beginning endless forms most beautiful and most wonderful have been, and are being, evolved.', author: 'Charles Darwin', meta: 'Charles Darwin · On the Origin of Species', source: 'On the Origin of Species', kind: 'historical' },
+  { id: 'h034', text: 'The mind is its own place, and in itself can make a heaven of hell, a hell of heaven.', author: 'John Milton', meta: 'John Milton · Paradise Lost', source: 'Paradise Lost', kind: 'historical' },
+  { id: 'h035', text: 'The world is my country, all mankind are my brethren, and to do good is my religion.', author: 'Thomas Paine', meta: 'Thomas Paine · Letter to Henry Truslow', source: 'Letter to Henry Truslow', kind: 'historical' },
 ]
+
+export const archiveQuotes = historicalQuotes
