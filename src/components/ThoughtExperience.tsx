@@ -8,6 +8,7 @@ import './thought-experience.css'
 type Submission = {
   id: string
   share_token: string
+  manage_token: string
   thought: string
   display_name: string
   status: 'pending' | 'approved' | 'rejected'
@@ -81,7 +82,10 @@ export function ThoughtExperience({ open, onClose }: Props) {
       ) {
         void fetch('/api/thoughts/' + submission.share_token + '/card', {
           method: 'PUT',
-          headers: { 'content-type': 'image/jpeg' },
+          headers: {
+            'content-type': 'image/jpeg',
+            'x-huar-manage-token': submission.manage_token,
+          },
           body: previewBlob,
         }).then((response) => {
           if (response.ok) uploadedPreviewRef.current = submission.share_token
@@ -296,7 +300,7 @@ export function ThoughtExperience({ open, onClose }: Props) {
       const response = await fetch('/api/thoughts/' + submission.share_token, {
         method: 'PATCH',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), manage_token: submission.manage_token }),
       })
       if (!response.ok) throw new Error()
       setEmailState('saved')
