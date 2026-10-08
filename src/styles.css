@@ -1002,24 +1002,73 @@ button {
 
 .partnership-section__contact {
   display: grid;
-  gap: 9px;
-  margin-top: 26px;
+  gap: 14px;
+  margin-top: 34px;
+  padding: clamp(24px, 3vw, 34px);
+  border: 1px solid rgba(224,232,255,0.16);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012)),
+    rgba(8,12,24,0.52);
+  box-shadow:
+    inset 0 1px rgba(255,255,255,0.035),
+    0 24px 70px rgba(0,0,0,0.18);
 }
 
-.partnership-section__contact strong,
+.partnership-section__contact > span {
+  color: rgba(211,220,241,0.54);
+  font-size: 9px;
+}
+
 .partnership-section__contact a {
-  width: fit-content;
-  color: rgba(240,244,255,0.7);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  color: rgba(248,250,255,0.96);
   text-decoration: none;
-  transition: color 180ms ease, opacity 180ms ease;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.partnership-section__contact a strong {
+  min-width: 0;
+  color: inherit;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(25px, 3vw, 42px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+.partnership-section__contact a i {
+  flex: 0 0 auto;
+  color: rgba(212,224,250,0.48);
+  font-size: clamp(19px, 2vw, 28px);
+  font-style: normal;
+  transition: transform 180ms ease, color 180ms ease;
 }
 
 .partnership-section__contact a:hover,
 .partnership-section__contact a:focus-visible {
-  color: rgba(252,253,255,0.98);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.partnership-section__contact a:hover i,
+.partnership-section__contact a:focus-visible i {
+  color: rgba(244,248,255,0.92);
+  transform: translate(3px,-3px);
+}
+
+.partnership-section__contact p {
+  max-width: 520px;
+  margin: 0;
+  color: rgba(211,220,241,0.34);
+  font-size: 10px;
+  line-height: 1.6;
 }
 
 .site-footer {
