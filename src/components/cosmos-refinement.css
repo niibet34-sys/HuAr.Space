@@ -10,7 +10,7 @@ html.huar-intro-lock body {
 html.huar-intro-lock .cosmos-hero .scroll-cue,
 html.huar-intro-lock .cosmos-hero .hero-context,
 html.huar-intro-lock .cosmos-hero .hero-ethos {
-  opacity: 0;
+  opacity: 0 !important;
   pointer-events: none;
 }
 
@@ -221,21 +221,21 @@ html.huar-intro-lock .cosmos-hero .hero-ethos {
     filter: blur(28px);
     letter-spacing: 0.02em;
   }
-  7% {
+  4% {
     opacity: 0.08;
   }
-  14% {
-    opacity: 0.36;
-    transform: translate3d(0, 18px, -230px) scale(0.62);
-    filter: blur(12px);
+  9% {
+    opacity: 0.48;
+    transform: translate3d(0, 17px, -190px) scale(0.67);
+    filter: blur(10px);
   }
-  23% {
+  15% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
     filter: blur(0);
     letter-spacing: 0;
   }
-  68% {
+  72% {
     opacity: 1;
     transform: translate3d(0, -3px, 6px) scale(1.012);
     filter: blur(0);
