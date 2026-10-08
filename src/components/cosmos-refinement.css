@@ -1,0 +1,435 @@
+/* HUAR — living quote cosmos.
+   The foreground voice is the hero. Brand/product copy stays secondary. */
+
+html.huar-intro-lock,
+html.huar-intro-lock body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+html.huar-intro-lock .cosmos-hero .scroll-cue,
+html.huar-intro-lock .cosmos-hero .hero-context,
+html.huar-intro-lock .cosmos-hero .hero-ethos {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.cosmos-hero {
+  --hero-ink: rgba(250, 249, 246, 0.98);
+  --hero-muted: rgba(225, 228, 236, 0.5);
+  --hero-hairline: rgba(231, 234, 242, 0.16);
+}
+
+.cosmos-hero .quote-layer {
+  z-index: 6;
+}
+
+.cosmos-hero .space-quote {
+  width: clamp(150px, 15vw, 250px);
+  padding: 8px 10px;
+  border-left-color: rgba(205, 216, 255, 0.08);
+  background: linear-gradient(90deg, rgba(8, 11, 23, 0.1), transparent 84%);
+  text-shadow: 0 0 28px rgba(0, 0, 0, 0.95);
+}
+
+.cosmos-hero .space-quote__text {
+  font-size: clamp(10px, 0.78vw, 13px);
+  line-height: 1.44;
+}
+
+.cosmos-hero .space-quote__meta {
+  margin-top: 6px;
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  opacity: 0.5;
+}
+
+.cosmos-hero .space-quote[data-focused="true"] {
+  width: clamp(220px, 24vw, 360px);
+  padding: 15px 17px;
+  border-left-color: rgba(220, 229, 255, 0.52);
+  background: linear-gradient(90deg, rgba(17, 24, 48, 0.42), rgba(4, 6, 14, 0.02) 88%);
+}
+
+.cosmos-hero .space-quote[data-focused="true"] .space-quote__text {
+  font-size: clamp(15px, 1.22vw, 19px);
+}
+
+/* Product meaning: present, but never louder than a human voice. */
+.hero-context {
+  position: absolute;
+  z-index: 17;
+  left: var(--page-pad);
+  bottom: clamp(5rem, 9vh, 7.2rem);
+  width: min(24rem, 30vw);
+  pointer-events: none;
+  animation: context-in 1.7s 0.45s cubic-bezier(.2,.7,.2,1) both;
+}
+
+.hero-context .eyebrow {
+  margin-bottom: 1rem;
+  color: rgba(205, 215, 242, 0.36);
+}
+
+.hero-context__rule {
+  margin: 0;
+  color: rgba(245, 247, 252, 0.74);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 1.75vw, 1.8rem);
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+}
+
+.hero-context__copy {
+  max-width: 22rem;
+  margin: 0.9rem 0 0;
+  color: rgba(222, 227, 239, 0.34);
+  font-size: clamp(0.72rem, 0.82vw, 0.84rem);
+  line-height: 1.58;
+}
+
+/* The living voice */
+.featured-thought-wrap {
+  position: absolute;
+  z-index: 18;
+  top: 43%;
+  left: 52%;
+  width: min(46rem, 58vw);
+  perspective: 1200px;
+  transform: translate(-50%, -50%);
+  transition: top 2.8s ease, left 2.8s ease;
+  pointer-events: none;
+}
+
+.featured-thought-wrap--0 { left: 51%; top: 42%; }
+.featured-thought-wrap--1 { left: 55%; top: 45%; }
+.featured-thought-wrap--2 { left: 49%; top: 44%; }
+
+.featured-thought {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: clamp(1.1rem, 2vw, 1.8rem) clamp(1.15rem, 2vw, 1.7rem);
+  border: 0;
+  color: rgba(251, 251, 248, 0.97);
+  background: transparent;
+  text-align: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transform-style: preserve-3d;
+  will-change: opacity, transform, filter;
+  animation: none;
+}
+
+.featured-thought.is-paused {
+  animation-play-state: paused;
+}
+
+.featured-thought--incoming {
+  animation: thought-arrive 1.08s cubic-bezier(.16,.72,.18,1) both;
+}
+
+.featured-thought--outgoing {
+  pointer-events: none;
+  animation: thought-exit 0.9s cubic-bezier(.4,0,.8,.2) both;
+}
+
+.featured-thought-wrap--incoming {
+  z-index: 19;
+}
+
+.featured-thought-wrap--outgoing {
+  z-index: 18;
+}
+
+.featured-thought::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: -8rem -9rem;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(8, 12, 26, 0.64) 0%,
+      rgba(3, 5, 12, 0.35) 33%,
+      rgba(2, 3, 9, 0.08) 56%,
+      rgba(1, 2, 7, 0) 74%);
+  filter: blur(8px);
+}
+
+.featured-thought::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(120, 145, 220, 0.06), transparent 66%);
+  filter: blur(18px);
+  transform: translate(-50%, -50%);
+  animation: thought-pulse 5.4s ease-in-out infinite;
+}
+
+.featured-thought__signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: clamp(1rem, 2vh, 1.45rem);
+  color: rgba(204, 214, 237, 0.28);
+  font-size: 0.54rem;
+  font-weight: 650;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+.featured-thought__signal i {
+  display: block;
+  width: 1.8rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(194, 209, 245, 0), rgba(194, 209, 245, 0.42));
+}
+
+.featured-thought__text {
+  display: block;
+  max-width: 18ch;
+  margin: 0 auto;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 3.2vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  text-shadow:
+    0 0 28px rgba(160, 180, 235, 0.035),
+    0 12px 50px rgba(0, 0, 0, 0.62);
+}
+
+.featured-thought__meta {
+  display: block;
+  margin-top: clamp(1.1rem, 2.4vh, 1.6rem);
+  color: rgba(205, 214, 235, 0.38);
+  font-size: 0.61rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-ethos {
+  position: absolute;
+  z-index: 16;
+  right: var(--page-pad);
+  bottom: clamp(5.25rem, 9vh, 7.4rem);
+  color: rgba(214, 222, 240, 0.18);
+  font-size: 0.57rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+@keyframes thought-arrive {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 34px, -680px) scale(0.16);
+    filter: blur(24px);
+  }
+  35% {
+    opacity: 0.46;
+    transform: translate3d(0, 14px, -190px) scale(0.68);
+    filter: blur(8px);
+  }
+  72% {
+    opacity: 0.96;
+    transform: translate3d(0, 2px, -18px) scale(0.97);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes thought-exit {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+  45% {
+    opacity: 0.5;
+    transform: translate3d(0, -8px, -180px) scale(0.72);
+    filter: blur(7px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -24px, -620px) scale(0.18);
+    filter: blur(24px);
+  }
+}
+
+@keyframes thought-pulse {
+  0%, 100% { opacity: 0.28; transform: translate(-50%, -50%) scale(0.9); }
+  50% { opacity: 0.62; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+@keyframes context-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .hero-context {
+    width: min(21rem, 40vw);
+  }
+
+  .featured-thought-wrap {
+    width: min(39rem, 68vw);
+  }
+
+  .featured-thought__text {
+    font-size: clamp(1.8rem, 4.5vw, 3rem);
+  }
+}
+
+@media (max-width: 620px) {
+  .cosmos-hero .space-quote {
+    width: min(38vw, 138px);
+    padding: 6px 7px;
+    border-left-color: rgba(205, 216, 255, 0.055);
+    background: transparent;
+  }
+
+  .cosmos-hero .space-quote__text {
+    font-size: 8.5px;
+    line-height: 1.35;
+  }
+
+  .cosmos-hero .space-quote__meta {
+    display: none;
+  }
+
+  .cosmos-hero .space-quote[data-focused="true"] {
+    width: min(70vw, 270px);
+    padding: 12px 13px;
+    background: linear-gradient(90deg, rgba(16, 22, 43, 0.42), transparent 90%);
+  }
+
+  .cosmos-hero .space-quote[data-focused="true"] .space-quote__text {
+    font-size: 14px;
+  }
+
+  .cosmos-hero .space-quote[data-focused="true"] .space-quote__meta {
+    display: block;
+    font-size: 8px;
+  }
+
+  .featured-thought-wrap,
+  .featured-thought-wrap--0,
+  .featured-thought-wrap--1,
+  .featured-thought-wrap--2 {
+    top: 42%;
+    left: 50%;
+    width: min(90vw, 28rem);
+  }
+
+  .featured-thought-wrap--1 { top: 45%; left: 52%; }
+  .featured-thought-wrap--2 { top: 43%; left: 48%; }
+
+  .featured-thought {
+    padding: 1rem 0.9rem;
+  }
+
+  .featured-thought::before {
+    inset: -6rem -4rem;
+  }
+
+  .featured-thought__signal {
+    margin-bottom: 0.9rem;
+    font-size: 0.47rem;
+    letter-spacing: 0.17em;
+  }
+
+  .featured-thought__signal i {
+    width: 1.2rem;
+  }
+
+  .featured-thought__text {
+    max-width: 17ch;
+    font-size: clamp(1.65rem, 7.5vw, 2.3rem);
+    line-height: 1.12;
+  }
+
+  .featured-thought__meta {
+    margin-top: 1rem;
+    font-size: 0.51rem;
+    letter-spacing: 0.18em;
+  }
+
+  .hero-context {
+    left: 1.4rem;
+    right: 1.4rem;
+    bottom: 4.6rem;
+    width: auto;
+    max-width: 17.5rem;
+  }
+
+  .hero-context .eyebrow {
+    margin-bottom: 0.55rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+  }
+
+  .hero-context__rule {
+    font-size: 1.05rem;
+    line-height: 1.15;
+  }
+
+  .hero-context__copy {
+    display: none;
+  }
+
+  .hero-ethos {
+    display: none;
+  }
+
+  .cosmos-hero .scroll-cue {
+    left: auto;
+    right: 1.35rem;
+    bottom: max(1.3rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 380px) {
+  .featured-thought-wrap,
+  .featured-thought-wrap--0,
+  .featured-thought-wrap--1,
+  .featured-thought-wrap--2 {
+    top: 40%;
+  }
+
+  .featured-thought__text {
+    font-size: clamp(1.5rem, 7.3vw, 2rem);
+  }
+
+  .hero-context {
+    bottom: 4.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-thought {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .featured-thought::after {
+    animation: none;
+  }
+}
