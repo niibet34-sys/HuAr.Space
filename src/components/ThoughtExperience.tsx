@@ -189,7 +189,7 @@ export function ThoughtExperience({ open, onClose }: Props) {
   }
 
   const shareText = submission
-    ? 'I left one thought for humanity. What would yours be?\nHUAR.SPACE'
+    ? 'I left one thought for humanity. What would yours be?\nHUAR.SPACE\n' + submission.permalink
     : ''
 
   const shareNative = async () => {
