@@ -1006,11 +1006,20 @@ button {
   margin-top: 26px;
 }
 
-.partnership-section__contact strong {
-  color: rgba(235,240,253,0.48);
+.partnership-section__contact strong,
+.partnership-section__contact a {
+  width: fit-content;
+  color: rgba(240,244,255,0.7);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 180ms ease, opacity 180ms ease;
+}
+
+.partnership-section__contact a:hover,
+.partnership-section__contact a:focus-visible {
+  color: rgba(252,253,255,0.98);
 }
 
 .site-footer {
