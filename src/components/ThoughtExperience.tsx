@@ -65,7 +65,7 @@ export function ThoughtExperience({ open, onClose }: Props) {
       epoch: submission.epoch,
       seed: submission.share_token,
       format: cardFormat,
-    }).then(({ blob, previewBlob }) => {
+    }).then(async ({ blob, previewBlob }) => {
       if (!active) return
       setCardBlob(blob)
       const nextUrl = URL.createObjectURL(blob)
@@ -73,24 +73,28 @@ export function ThoughtExperience({ open, onClose }: Props) {
         if (current) URL.revokeObjectURL(current)
         return nextUrl
       })
-      setCardBusy(false)
-
       if (
         cardFormat === 'portrait' &&
         previewBlob &&
         uploadedPreviewRef.current !== submission.share_token
       ) {
-        void fetch('/api/thoughts/' + submission.share_token + '/card', {
-          method: 'PUT',
-          headers: {
-            'content-type': 'image/jpeg',
-            'x-huar-manage-token': submission.manage_token,
-          },
-          body: previewBlob,
-        }).then((response) => {
+        try {
+          const response = await fetch('/api/thoughts/' + submission.share_token + '/card', {
+            method: 'PUT',
+            headers: {
+              'content-type': 'image/jpeg',
+              'x-huar-manage-token': submission.manage_token,
+            },
+            body: previewBlob,
+          })
           if (response.ok) uploadedPreviewRef.current = submission.share_token
-        }).catch(() => undefined)
+        } catch {
+          // The high-resolution local card remains usable even if preview persistence fails.
+        }
       }
+
+      if (!active) return
+      setCardBusy(false)
 
       trackEvent('thought_card_generated', {
         thought_id: submission.id,
@@ -398,6 +402,11 @@ export function ThoughtExperience({ open, onClose }: Props) {
           </div>
         ) : (
           <div className="thought-success">
+            <div className="thought-success__signal" aria-hidden="true">
+              <span />
+              <span />
+              <i />
+            </div>
             <div className="thought-success__intro">
               <p className="thought-overline">Your thought has entered HUAR.</p>
               <h2>Now let it travel.</h2>
@@ -426,11 +435,11 @@ export function ThoughtExperience({ open, onClose }: Props) {
 
               <div className="thought-share__actions">
                 <button type="button" onClick={downloadCard} disabled={!cardBlob}>Download image</button>
-                <button type="button" onClick={copyLink}>{copied ? 'Link copied' : 'Copy link'}</button>
-                <button type="button" onClick={() => socialShare('x')}>X</button>
-                <button type="button" onClick={() => socialShare('facebook')}>Facebook</button>
-                <button type="button" onClick={() => socialShare('whatsapp')}>WhatsApp</button>
-                <button type="button" onClick={() => socialShare('linkedin')}>LinkedIn</button>
+                <button type="button" onClick={copyLink} disabled={cardBusy}>{copied ? 'Link copied' : 'Copy link'}</button>
+                <button type="button" onClick={() => socialShare('x')} disabled={cardBusy}>X</button>
+                <button type="button" onClick={() => socialShare('facebook')} disabled={cardBusy}>Facebook</button>
+                <button type="button" onClick={() => socialShare('whatsapp')} disabled={cardBusy}>WhatsApp</button>
+                <button type="button" onClick={() => socialShare('linkedin')} disabled={cardBusy}>LinkedIn</button>
               </div>
               <p className="thought-share__instagram">For Instagram, use Share on mobile or download the image and post it from the app.</p>
             </div>
