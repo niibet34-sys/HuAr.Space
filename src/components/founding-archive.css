@@ -218,15 +218,30 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
   min-height: 48px;
   padding: 13px 18px;
-  border: 1px solid rgba(226, 233, 255, 0.16);
-  color: rgba(241, 245, 255, 0.5);
-  background: rgba(255, 255, 255, 0.022);
+  border: 1px solid rgba(226, 233, 255, 0.24);
+  color: rgba(247, 249, 255, 0.9);
+  background: rgba(255, 255, 255, 0.035);
   font-size: 9px;
   font-weight: 650;
   letter-spacing: 0.13em;
+  text-decoration: none;
   text-transform: uppercase;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.founder-access:hover,
+.founder-access:focus-visible {
+  border-color: rgba(231, 237, 255, 0.5);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-1px);
 }
 
 .first-hundred__actions small {
