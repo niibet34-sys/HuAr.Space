@@ -101,14 +101,26 @@ export const onRequestPost = async (context: any) => {
   ).run()
 
   if (context.env.FOUNDER_NOTIFY && context.env.FOUNDER_NOTIFY_SECRET) {
-    const notify = context.env.FOUNDER_NOTIFY.fetch('https://huar.internal/founder-request', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-huar-secret': context.env.FOUNDER_NOTIFY_SECRET,
-      },
-      body: JSON.stringify({ id, name, email, country, note }),
-    }).catch(() => undefined)
+    const notify = (async () => {
+      let notificationStatus = 'failed'
+      try {
+        const response = await context.env.FOUNDER_NOTIFY.fetch('https://huar.internal/founder-request', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            'x-huar-secret': context.env.FOUNDER_NOTIFY_SECRET,
+          },
+          body: JSON.stringify({ id, name, email, country, note }),
+        })
+        notificationStatus = response.ok ? 'sent' : 'failed'
+      } catch {
+        notificationStatus = 'failed'
+      }
+
+      await context.env.HUAR_DB.prepare(
+        'UPDATE founder_requests SET notification_status = ? WHERE id = ?'
+      ).bind(notificationStatus, id).run()
+    })()
 
     if (context.waitUntil) context.waitUntil(notify)
   }
