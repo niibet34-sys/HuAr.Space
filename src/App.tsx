@@ -148,7 +148,11 @@ function App() {
             </div>
             <div className="partnership-section__contact">
               <span>Partnership & investment inquiries</span>
-              <a href="mailto:partners@huar.space">partners@huar.space</a>
+              <a href="mailto:partners@huar.space">
+                <strong>partners@huar.space</strong>
+                <i aria-hidden="true">↗</i>
+              </a>
+              <p>Direct inquiries are reviewed personally by Roman Rothschild.</p>
             </div>
           </div>
         </div>
