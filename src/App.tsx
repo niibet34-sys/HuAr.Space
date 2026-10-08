@@ -1,10 +1,37 @@
+import { useEffect, useState } from 'react'
 import { CosmosHero } from './components/CosmosHero'
 import { FoundingArchive } from './components/FoundingArchive'
+import { ThoughtExperience } from './components/ThoughtExperience'
+import { getReferralToken, trackEvent, trackReferralArrival } from './lib/analytics'
 
 function App() {
+  const [thoughtOpen, setThoughtOpen] = useState(false)
+
+  useEffect(() => {
+    trackReferralArrival()
+
+    const openFromHash = () => {
+      if (window.location.hash === '#leave-a-thought') {
+        setThoughtOpen(true)
+      }
+    }
+
+    openFromHash()
+    window.addEventListener('hashchange', openFromHash)
+    return () => window.removeEventListener('hashchange', openFromHash)
+  }, [])
+
+  const openThought = (source: string) => {
+    trackEvent('leave_thought_cta_clicked', {
+      referral_token: getReferralToken(),
+      metadata: { source },
+    })
+    setThoughtOpen(true)
+  }
+
   return (
     <main className="site-shell">
-      <CosmosHero />
+      <CosmosHero onLeaveThought={() => openThought('hero')} />
 
       <section className="archive-section" id="archive">
         <div className="section-kicker">The archive</div>
@@ -130,9 +157,16 @@ function App() {
       <section className="leave-section" id="leave-a-thought">
         <p className="eyebrow">Your place in the archive</p>
         <h2>If humanity could remember one thought from you today, what would it be?</h2>
-        <p className="leave-section__note">Your thought becomes part of the 2030 Founding Archive. The next archive is sealed in 2040.</p>
-        <a className="return-to-space" href="#top">Return to the cosmos <span aria-hidden="true">↗</span></a>
+        <p className="leave-section__note">Submit one thought for the 2030 Founding Archive. Public archive inclusion is reviewed before it appears in the HUAR cosmos.</p>
+        <div className="leave-section__actions">
+          <button className="leave-thought-button" type="button" onClick={() => openThought('closing_section')}>
+            Leave your thought <span aria-hidden="true">↗</span>
+          </button>
+          <a className="return-to-space" href="#top">Return to the cosmos <span aria-hidden="true">↑</span></a>
+        </div>
       </section>
+
+      <ThoughtExperience open={thoughtOpen} onClose={() => setThoughtOpen(false)} />
 
       <footer className="site-footer">
         <span>HUAR · Human Archive Space</span>
