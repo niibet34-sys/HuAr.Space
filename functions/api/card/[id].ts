@@ -15,6 +15,13 @@ function wrap(text: string, limit = 28) {
   return lines.slice(0, 8)
 }
 
+function fromBase64(value: string) {
+  const binary = atob(value)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i)
+  return bytes
+}
+
 export const onRequestGet = async (context: any) => {
   const token = String(context.params.id || '')
   const item = await context.env.HUAR_DB.prepare(
@@ -22,6 +29,19 @@ export const onRequestGet = async (context: any) => {
   ).bind(token).first()
 
   if (!item || item.status === 'rejected') return new Response('Not found', { status: 404 })
+
+  const raster = await context.env.HUAR_DB.prepare(
+    'SELECT image_base64, mime_type FROM thought_cards WHERE share_token = ? LIMIT 1'
+  ).bind(token).first()
+
+  if (raster?.image_base64) {
+    return new Response(fromBase64(String(raster.image_base64)), {
+      headers: {
+        'content-type': raster.mime_type || 'image/jpeg',
+        'cache-control': item.status === 'approved' ? 'public, max-age=86400' : 'private, max-age=300',
+      },
+    })
+  }
 
   const lines = wrap(String(item.thought), 28)
   const tspans = lines.map((line, i) =>
