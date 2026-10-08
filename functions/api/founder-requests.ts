@@ -100,5 +100,18 @@ export const onRequestPost = async (context: any) => {
     JSON.stringify({ country: country || null }).slice(0, 800),
   ).run()
 
+  if (context.env.FOUNDER_NOTIFY && context.env.FOUNDER_NOTIFY_SECRET) {
+    const notify = context.env.FOUNDER_NOTIFY.fetch('https://huar.internal/founder-request', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-huar-secret': context.env.FOUNDER_NOTIFY_SECRET,
+      },
+      body: JSON.stringify({ id, name, email, country, note }),
+    }).catch(() => undefined)
+
+    if (context.waitUntil) context.waitUntil(notify)
+  }
+
   return json({ ok: true, id, status: 'new' }, 201)
 }
