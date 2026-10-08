@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
+import { FOUNDING_CIRCLE } from '../config'
 import './founding-archive.css'
 
 const FOUNDING_ARCHIVE_DEADLINE = Date.UTC(2030, 0, 1, 0, 0, 0)
-const TOTAL_FOUNDING_PLACES = 100
-const RESERVED_FOUNDING_PLACES = 11
+const TOTAL_FOUNDING_PLACES = FOUNDING_CIRCLE.total
+const RESERVED_FOUNDING_PLACES = FOUNDING_CIRCLE.reserved
 
 type Countdown = {
   days: number
@@ -119,7 +120,7 @@ export function FoundingArchive() {
 
           <div className="first-hundred__terms">
             <span>Founding contribution</span>
-            <strong>$1,000</strong>
+            <strong>${FOUNDING_CIRCLE.contributionUsd.toLocaleString()}</strong>
           </div>
 
           <div className="first-hundred__actions">
