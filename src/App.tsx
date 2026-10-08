@@ -63,6 +63,9 @@ function App() {
           <p>
             The first capsule will be sealed in 2030. The names of HUAR’s first 100 founders will be permanently engraved on that founding capsule as part of the project’s origin record.
           </p>
+          <p className="mission-origin">
+            HUAR was conceived and created by <strong>Roman Rothschild</strong>.
+          </p>
         </div>
       </section>
 
@@ -99,6 +102,31 @@ function App() {
         </div>
       </section>
 
+      <section className="partnership-section" id="partners">
+        <div className="partnership-section__eyebrow">Strategic partners · institutions · space</div>
+        <div className="partnership-section__grid">
+          <div>
+            <h2>Help build the first permanent archive of human thought.</h2>
+          </div>
+          <div className="partnership-section__copy">
+            <p>
+              HUAR is open to conversations with space companies, cultural institutions, foundations, sovereign funds, strategic investors and long-term partners who can help make the 2030 Founding Archive real.
+            </p>
+            <p>
+              Support at this level is not just funding. The institutions and partners who make the first physical capsule — and a future space mission — possible can become part of HUAR’s permanent origin record.
+            </p>
+            <div className="partnership-section__statement">
+              <span>Become part of the origin.</span>
+              <strong>Help write the first chapter into history.</strong>
+            </div>
+            <div className="partnership-section__contact">
+              <span>Partnership & investment inquiries</span>
+              <strong>Email contact opening shortly at huar.space</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="leave-section" id="leave-a-thought">
         <p className="eyebrow">Your place in the archive</p>
         <h2>If humanity could remember one thought from you today, what would it be?</h2>
@@ -108,6 +136,7 @@ function App() {
 
       <footer className="site-footer">
         <span>HUAR · Human Archive Space</span>
+        <span>Conceived and created by Roman Rothschild.</span>
         <span>A memory of humanity, built one decade at a time.</span>
       </footer>
     </main>
