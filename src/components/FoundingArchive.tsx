@@ -123,10 +123,15 @@ export function FoundingArchive() {
           </div>
 
           <div className="first-hundred__actions">
-            <span className="founder-access founder-access--pending" aria-disabled="true">
-              Founding access opening soon
-            </span>
-            <small>Founding status is commemorative and does not represent equity or ownership.</small>
+            <a
+              className="founder-access"
+              href="mailto:founders@huar.space?subject=HUAR%20Founding%20Circle%20%E2%80%94%20Place%20Request&body=Hello%20Roman%2C%0A%0AI%27m%20interested%20in%20reserving%20one%20of%20the%20First%20100%20Founding%20Places%20in%20HUAR.%0A%0AName%3A%0ACountry%3A%0A%0ABest%2C"
+            >
+              Request a Founding Place
+            </a>
+            <small>
+              Applications are reviewed personally by the founder. Founding status is commemorative and does not represent equity or ownership.
+            </small>
           </div>
         </div>
 
