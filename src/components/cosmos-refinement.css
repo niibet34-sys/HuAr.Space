@@ -1,6 +1,19 @@
 /* HUAR — living quote cosmos.
    The foreground voice is the hero. Brand/product copy stays secondary. */
 
+html.huar-intro-lock,
+html.huar-intro-lock body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+html.huar-intro-lock .cosmos-hero .scroll-cue,
+html.huar-intro-lock .cosmos-hero .hero-context,
+html.huar-intro-lock .cosmos-hero .hero-ethos {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .cosmos-hero {
   --hero-ink: rgba(250, 249, 246, 0.98);
   --hero-muted: rgba(225, 228, 236, 0.5);
@@ -204,29 +217,36 @@
 @keyframes thought-flight {
   0% {
     opacity: 0;
-    transform: translate3d(0, 26px, -260px) scale(0.68);
-    filter: blur(13px);
+    transform: translate3d(0, 42px, -620px) scale(0.22);
+    filter: blur(28px);
+    letter-spacing: 0.02em;
   }
-  8% {
-    opacity: 0.18;
+  7% {
+    opacity: 0.08;
   }
-  16% {
+  14% {
+    opacity: 0.36;
+    transform: translate3d(0, 18px, -230px) scale(0.62);
+    filter: blur(12px);
+  }
+  23% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
     filter: blur(0);
+    letter-spacing: 0;
   }
-  70% {
+  68% {
     opacity: 1;
-    transform: translate3d(0, -2px, 0) scale(1.008);
+    transform: translate3d(0, -3px, 6px) scale(1.012);
     filter: blur(0);
   }
-  82% {
-    opacity: 0.72;
+  79% {
+    opacity: 0.78;
   }
   100% {
     opacity: 0;
-    transform: translate3d(0, -18px, -300px) scale(0.64);
-    filter: blur(14px);
+    transform: translate3d(0, -26px, -520px) scale(0.28);
+    filter: blur(24px);
   }
 }
 
