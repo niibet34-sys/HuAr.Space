@@ -38,6 +38,7 @@ export function ThoughtExperience({ open, onClose }: Props) {
   const [email, setEmail] = useState('')
   const [emailState, setEmailState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const startedRef = useRef(false)
+  const uploadedPreviewRef = useRef('')
 
   const remainingFounders = FOUNDING_CIRCLE.total - FOUNDING_CIRCLE.reserved
   const charsRemaining = MAX_THOUGHT - thought.length
@@ -63,7 +64,7 @@ export function ThoughtExperience({ open, onClose }: Props) {
       epoch: submission.epoch,
       seed: submission.share_token,
       format: cardFormat,
-    }).then(({ blob }) => {
+    }).then(({ blob, previewBlob }) => {
       if (!active) return
       setCardBlob(blob)
       const nextUrl = URL.createObjectURL(blob)
@@ -72,6 +73,21 @@ export function ThoughtExperience({ open, onClose }: Props) {
         return nextUrl
       })
       setCardBusy(false)
+
+      if (
+        cardFormat === 'portrait' &&
+        previewBlob &&
+        uploadedPreviewRef.current !== submission.share_token
+      ) {
+        void fetch('/api/thoughts/' + submission.share_token + '/card', {
+          method: 'PUT',
+          headers: { 'content-type': 'image/jpeg' },
+          body: previewBlob,
+        }).then((response) => {
+          if (response.ok) uploadedPreviewRef.current = submission.share_token
+        }).catch(() => undefined)
+      }
+
       trackEvent('thought_card_generated', {
         thought_id: submission.id,
         referral_token: referral,
@@ -112,6 +128,7 @@ export function ThoughtExperience({ open, onClose }: Props) {
     setEmailState('idle')
     setError('')
     startedRef.current = false
+    uploadedPreviewRef.current = ''
     onClose()
   }
 
