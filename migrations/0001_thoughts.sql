@@ -31,3 +31,11 @@ CREATE TABLE IF NOT EXISTS rate_limits (
   count INTEGER NOT NULL DEFAULT 0,
   updated_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS thought_cards (
+  share_token TEXT PRIMARY KEY,
+  image_base64 TEXT NOT NULL,
+  mime_type TEXT NOT NULL DEFAULT 'image/jpeg',
+  created_at TEXT NOT NULL,
+  FOREIGN KEY (share_token) REFERENCES thoughts(share_token)
+);
