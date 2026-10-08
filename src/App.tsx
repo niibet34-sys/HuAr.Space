@@ -121,7 +121,7 @@ function App() {
             </div>
             <div className="partnership-section__contact">
               <span>Partnership & investment inquiries</span>
-              <strong>Email contact opening shortly at huar.space</strong>
+              <a href="mailto:partners@huar.space">partners@huar.space</a>
             </div>
           </div>
         </div>
