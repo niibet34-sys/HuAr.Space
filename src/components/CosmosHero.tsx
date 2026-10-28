@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { historicalQuotes } from '../data/quotes'
+import { FOUNDING_CIRCLE } from '../config'
 import type { ArchiveQuote } from '../data/quotes'
 import type { UniverseEngine } from '../lib/UniverseEngine'
 import './cosmos-refinement.css'
@@ -8,6 +9,7 @@ const QUOTE_CYCLE_MS = 7400
 const INTRO_QUOTE_DELAY_MS = 120
 const INTRO_SCROLL_LOCK_MS = 1900
 const AMBIENT_QUOTE_COUNT = 10
+const FOUNDING_PLACES_REMAINING = FOUNDING_CIRCLE.total - FOUNDING_CIRCLE.reserved
 
 function randomIndex(length: number, except = -1) {
   if (length <= 1) return 0
@@ -187,6 +189,13 @@ export function CosmosHero({ onLeaveThought }: { onLeaveThought: () => void }) {
           <p className="hero-context__copy">
             The first archive is sealed in 2030. Then 2040, 2050 and beyond — a shared timeline of human change.
           </p>
+          <a className="hero-founder-cta" href="#first-100">
+            <span>
+              <strong>Become one of the First 100</strong>
+              <small>{FOUNDING_PLACES_REMAINING} founding places remain</small>
+            </span>
+            <i aria-hidden="true">↘</i>
+          </a>
         </div>
 
         {introReady && outgoingQuote && !focusedQuote && (
