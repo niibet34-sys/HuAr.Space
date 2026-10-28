@@ -174,6 +174,16 @@ export function FoundingArchive() {
           <p className="founding-countdown__note">
             Thoughts submitted after the deadline belong to the 2040 Archive.
           </p>
+
+          <a className="founding-countdown__founder-cta" href="#first-100">
+            <span>
+              <small>The First 100 · Founding Circle</small>
+              <strong>Become part of where HUAR begins.</strong>
+            </span>
+            <span className="founding-countdown__founder-availability">
+              {remainingPlaces} places remain <i aria-hidden="true">↓</i>
+            </span>
+          </a>
         </div>
       </section>
 
@@ -200,7 +210,8 @@ export function FoundingArchive() {
 
           <div className="first-hundred__actions">
             <button className="founder-access" type="button" onClick={openRequest}>
-              Request a Founding Place
+              <span>Request a Founding Place</span>
+              <i aria-hidden="true">↗</i>
             </button>
             <small>
               Requests are reviewed personally by Roman Rothschild. Founding status is commemorative and does not represent equity or ownership.
